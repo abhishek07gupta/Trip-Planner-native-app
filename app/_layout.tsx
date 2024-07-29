@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import Index from ".";
+
 export default function RootLayout() {
   useFonts({
     'outfit':require('./../assets/fonts/Outfit-Regular.ttf'),
