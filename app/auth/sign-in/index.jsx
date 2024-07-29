@@ -8,6 +8,8 @@ import {
 import React, { useEffect } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "./../../../constants/Colors";
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 export default function SignIn() {
   const router = useRouter();
@@ -21,15 +23,19 @@ export default function SignIn() {
     <View
       style={{
         padding: 25,
-        marginTop: 30,
+        marginTop: 20,
         height: "100%",
       }}
     >
+      <TouchableOpacity onPress={()=>router.back()}>
+      <Ionicons name="arrow-back-sharp" size={26} color="black" />
+      </TouchableOpacity>
       <Text
         style={{
           fontSize: 30,
           fontFamily: "outfit-bold",
           // paddingTop:25,
+          marginTop:10,
           textAlign: "center",
         }}
       >
