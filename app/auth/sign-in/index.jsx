@@ -4,12 +4,14 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "./../../../constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { auth } from "../../../configs/FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function SignIn() {
   const router = useRouter();
@@ -19,6 +21,29 @@ export default function SignIn() {
       headerShown: false,
     });
   }, []);
+
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+
+
+  const onSignIn = ()=>{
+    if(!email || !password){
+      ToastAndroid.show('Please fill all details',ToastAndroid.LONG)
+      return ;
+    }
+  signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage,errorCode)
+  });
+  }
   return (
     <View
       style={{
@@ -66,12 +91,14 @@ export default function SignIn() {
       <View style={{ marginTop: 15 }}>
         <Text style={styles.header}>Email</Text>
         <TextInput
+          onChangeText={(e)=>setEmail(e)}
           style={styles.textInput}
           placeholder="tripplanner@destiny.fly"
         ></TextInput>
 
         <Text style={styles.header}>Password</Text>
         <TextInput
+          onChangeText={(e)=>setPassword(e)}
           secureTextEntry={true}
           style={styles.textInput}
           placeholder="tripplannergo"
@@ -84,9 +111,9 @@ export default function SignIn() {
         }}
       >
         {/* sign in button  */}
-        <TouchableOpacity onPress={()=>{
-          router.push()
-        }}
+        <TouchableOpacity onPress={
+          onSignIn
+        }
           style={{
             backgroundColor: Colors.PRIMARY,
             padding: 15,

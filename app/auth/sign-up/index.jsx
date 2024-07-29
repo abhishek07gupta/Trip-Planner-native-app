@@ -4,11 +4,14 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "./../../../constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { auth } from "../../../configs/FirebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -18,6 +21,31 @@ export default function SignUp() {
       headerShown: false,
     });
   }, []);
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState()
+  const [fullName, setFullName] = useState()
+
+
+  const onCreateAccount=()=>{
+    if(!email || !password|| !fullName){
+      ToastAndroid.show('Please enter all details',ToastAndroid.LONG)
+      return ;
+    }
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage,errorCode)
+    // ..
+  });
+  }
 
   return (
     <View
@@ -67,18 +95,21 @@ export default function SignUp() {
       <View style={{ marginTop: 15 }}>
         <Text style={styles.header}>Email</Text>
         <TextInput
+          onChangeText={(e)=>setEmail(e)}
           style={styles.textInput}
           placeholder="tripplanner@destiny.fly"
         ></TextInput>
 
         <Text style={styles.header}>User Full Name</Text>
         <TextInput
+          onChangeText={(e)=>setFullName(e)}
           style={styles.textInput}
           placeholder="Trip Planner"
         ></TextInput>
 
         <Text style={styles.header}>Password</Text>
         <TextInput
+          onChangeText={(e)=>setPassword(e)}
           secureTextEntry={true}
           style={styles.textInput}
           placeholder="tripplannergo"
@@ -93,7 +124,8 @@ export default function SignUp() {
         {/* sign in button  */}
         <TouchableOpacity
           onPress={() => {
-            router.push();
+            onCreateAccount();
+            // router.push();
           }}
           style={{
             backgroundColor: Colors.PRIMARY,
