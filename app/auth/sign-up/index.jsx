@@ -36,12 +36,19 @@ export default function SignUp() {
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    if(user){
+      ToastAndroid.show('Sign Up Success',ToastAndroid.LONG)
+    }
+    router.replace('/mytrip')
     console.log(user);
     // ...
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    if(errorCode === "auth/email-already-in-use"){
+      ToastAndroid.show('Email already exists , signin or create new account',ToastAndroid.LONG)  
+    }
     console.log(errorMessage,errorCode)
     // ..
   });
