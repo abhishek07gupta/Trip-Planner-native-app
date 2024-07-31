@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
 import React, { useContext, useEffect } from "react";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "./../../constants/Colors";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { CreateTripContext } from "./../../context/CreateTripContext";
 
 export default function SearchPlace() {
   const navigation = useNavigation();
-
+  const router = useRouter();
   const { tripData, setTripData } = useContext(CreateTripContext);
   useEffect(() => {
     console.log(tripData);
@@ -43,6 +43,7 @@ export default function SearchPlace() {
               url: details?.url,
             },
           });
+          router.push('./Select-traveller')
           // 'details' is provided when fetchDetails = true
           // console.log(data, details);
         }}

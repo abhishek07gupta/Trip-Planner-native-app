@@ -8,10 +8,10 @@ export default function RootLayout() {
     "outfit-medium": require("./../assets/fonts/Outfit-Medium.ttf"),
     "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),
   });
-  const [tripData , SetTripData] = useState([])
+  const [tripData , setTripData] = useState([])
   // const tripContext = useContext(CreateTripContext);
   return (
-    <CreateTripContext.Provider value={{tripData,SetTripData}}>
+    <CreateTripContext.Provider value={{tripData,setTripData}}>
       <Stack
         screenOptions={{
           headerShown: false,
