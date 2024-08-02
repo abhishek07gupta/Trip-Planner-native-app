@@ -1,5 +1,5 @@
-import { View, Text, FlatList, FlatListComponent } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, FlatList, FlatListComponent, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router'
 import {Colors} from './../../constants/Colors'
 import {SelectTravelersList} from './../../constants/Options'
@@ -14,6 +14,9 @@ export default function SelectTraveller() {
             headerTitle:''
         })
     },[])
+
+    const [selectedTraveller, setSelectedTraveller] = useState();
+
   return (
     <View style={{
         padding:25,
@@ -31,10 +34,13 @@ export default function SelectTraveller() {
         <Text style={{fontFamily:'outfit-bold', fontSize:25}}>Select your Travellers</Text>
         <FlatList data={SelectTravelersList}
         keyExtractor={item => item.id}
-        renderItem={(item,index)=>(
-          <View>
-            <OptionCard option={item}/>
-          </View>
+        renderItem={({item,index})=>(
+          <TouchableOpacity style={{
+            paddingTop:20
+          }}
+          onPress={()=>{setSelectedTraveller(item.title)}}>
+            <OptionCard option={item} selectedTraveller={selectedTraveller}/>
+          </TouchableOpacity>
   )}>
           
         </FlatList>
