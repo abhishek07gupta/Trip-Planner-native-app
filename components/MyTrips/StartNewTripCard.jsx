@@ -34,14 +34,14 @@ export default function StartNewTripCard() {
       style={{
         padding:10,
         backgroundColor:Colors.PRIMARY,
-        marginTop:30,
-        borderRadius:10
+        marginTop:20,
+        borderRadius:10,
       }}>
         <Text style={{
-            paddingHorizontal:20,
+            textAlign:'center',
             color:Colors.WHITE,
             fontFamily:'outfit',
-            fontSize:25,
+            fontSize:25
         }}>New Trip</Text>
       </TouchableOpacity>
     </View>
