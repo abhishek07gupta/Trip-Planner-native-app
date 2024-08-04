@@ -1,10 +1,14 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Colors } from "../../constants/Colors";
 import UserTripCard from "./UserTripCard";
+import moment from "moment";
+import { useNavigation, useRouter } from "expo-router";
 
 export default function UserTripList({ userTrips }) {
-  const latestTrip = JSON.parse(userTrips[0]?.tripPlan?.tripData);
+  const latestTrip = JSON.parse(userTrips[0]?.tripDetails);
+  const router = useRouter()
+
   return (
     <View>
       <View
@@ -12,15 +16,22 @@ export default function UserTripList({ userTrips }) {
           marginTop: 20,
         }}
       >
+        {latestTrip?.location?.photoRef ? 
+        <Image style={{
+            width: "100%",
+            height: 240,
+            objectFit: "cover",
+            borderRadius: 15,
+        }} source={{uri:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+latestTrip.location.photoRef+"&key="+process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY}}></Image> :
         <Image
           style={{
             width: "100%",
-            height: "240",
+            height: 240,
             objectFit: "cover",
             borderRadius: 15,
           }}
           source={require("./../../assets/images/login.png")}
-        ></Image>
+        ></Image>}
         <View
           style={{
             marginTop: 10,
@@ -29,10 +40,10 @@ export default function UserTripList({ userTrips }) {
           <Text
             style={{
               fontFamily: "outfit-medium",
-              fontSize: 20,
+              fontSize: 25,
             }}
           >
-            {userTrips[0]?.tripPlan?.travelPlan?.location}
+            {userTrips[0]?.tripPlan?.trip?.destination}
           </Text>
           <View style={{
             display:'flex',
@@ -53,13 +64,18 @@ export default function UserTripList({ userTrips }) {
             style={{
                 fontFamily: "outfit",
                 fontSize: 17,
-                color:Colors.GRAY
+                color:Colors.GRAY,
+                textAlign:'center'
             }}
           >
-            🚌{latestTrip.traveller.title}
+            🚌 {latestTrip.traveller.title}
           </Text>
           </View>
-          <TouchableOpacity
+          <TouchableOpacity onPress={()=>{
+            router.push({pathname:'/trip-details',params:{
+                trip:JSON.stringify(userTrips[0])
+            }})
+          }}
             style={{
                 padding: 15,
                 backgroundColor: Colors.PRIMARY,
@@ -78,7 +94,7 @@ export default function UserTripList({ userTrips }) {
         </View>
 
         {userTrips.map((trip,index)=>(
-            <UserTripCard trip={trip}/>
+            <UserTripCard  trip={trip} key={index}/>
         ))}
       </View>
     </View>

@@ -36,10 +36,10 @@ export default function GenerateTrip() {
     const docId = Date.now().toString();
     try{
       const result_ = await setDoc(doc(db, "UserTrips", docId), {
-        docId,
+        docId:docId,
         userEmail: user.email,
         tripPlan:tripResp,
-        tripData:JSON.stringify(tripData)
+        tripDetails:JSON.stringify(tripData)
       });
       setLoading(false);
       handleSetLoading()
@@ -53,7 +53,7 @@ export default function GenerateTrip() {
     // setLoading(false);
     console.log(Loading)
     
-    router.push("./(tabs)/mytrip");
+    router.push("/(tabs)/mytrip");
   }
   useEffect(() => {
     navigation.setOptions({

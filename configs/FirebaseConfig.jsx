@@ -9,9 +9,9 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-const apiKey = process.env.EXPO_FIREBASE_API_KEY
+// const ApiKey = process.env.EXPO_FIREBASE_API_KEY
 const firebaseConfig = {
-  apiKey: apiKey,
+  apiKey: "AIzaSyDyHRKtH3EDeBFLyB9awrFXkDxCqrB1jfI",
   authDomain: "react-native-travel-planner.firebaseapp.com",
   projectId: "react-native-travel-planner",
   storageBucket: "react-native-travel-planner.appspot.com",
